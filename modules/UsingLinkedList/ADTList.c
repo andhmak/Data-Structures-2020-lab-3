@@ -182,5 +182,6 @@ void list_append(List list, List to_append) {
 	if (list_size(to_append)) {
 		list->last = list_last(to_append);
 	}
+	free(to_append->dummy);
 	free(to_append);
 }
