@@ -161,13 +161,26 @@ void list_destroy(List list) {
 //// Επιπλέον συναρτήσεις προς υλοποίηση στο Εργαστήριο 3
 
 Pointer list_get_at(List list, int pos) {
-	return NULL;
+	ListNode node;
+	int i;
+	for (node = list_first(list), i = 0 ; i < pos ; node = list_next(list, node), i++);
+	return list_node_value(list, node);
 }
 
 void list_remove(List list, ListNode node) {
-
+	for (ListNode prevnode = list->dummy ; prevnode != LIST_EOF ; prevnode = list_next(list, prevnode)) {
+		if (list_next(list, prevnode) == node) {
+			list_remove_next(list, prevnode);
+			break;
+		}
+	}
 }
 
 void list_append(List list, List to_append) {
-
+	list->last->next = list_first(to_append);
+	list->size += list_size(to_append);
+	if (list_size(to_append)) {
+		list->last = list_last(to_append);
+	}
+	free(to_append);
 }
